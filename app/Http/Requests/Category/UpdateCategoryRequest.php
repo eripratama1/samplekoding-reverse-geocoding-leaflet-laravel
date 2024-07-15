@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Str;
 class UpdateCategoryRequest extends FormRequest
 {
     /**
@@ -26,5 +26,12 @@ class UpdateCategoryRequest extends FormRequest
             'slug' => 'required',
             'icon' => 'image'
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'slug' => $this->slug ?: Str::slug($this->name),
+        ]);
     }
 }
