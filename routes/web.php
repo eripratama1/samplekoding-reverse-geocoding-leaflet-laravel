@@ -11,6 +11,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('category',(App\Http\Controllers\CategoryController::class));
+Route::resource('spot',(App\Http\Controllers\SpotController::class));
 
 /**
  * Route yang akan mereturn data ctaegories dalam format json dari datatable
