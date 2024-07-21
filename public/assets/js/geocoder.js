@@ -17,12 +17,21 @@ function onMapClick(e) {
         currentMarker = L.marker(e.latlng,{
             draggable:true
         }).addTo(map);
-        console.log("Koordinat awal",e.latlng);
+        //console.log("Koordinat awal",e.latlng);
         currentMarker.on('dragend',onMarkerDragend);
     } else {
         currentMarker.setLatLng(e.latlng);
-        console.log("Koordinat baru",e.latlng);
+        //console.log("Koordinat baru",e.latlng);
     }
+
+    // Menetapkan nilai untuk elemen dengan id lat dan lng pada HTML (file create.blade.php)
+    document.getElementById("lat").value = e.latlng.lat;
+    document.getElementById("lng").value = e.latlng.lng;
+
+    // Menggunakan API  untuk proses reverse geocoding dengan latitude dan longitude
+    const url = "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + e.latlng.lat + "&lon=" + e.latlng.lng;
+    // Memanggil fungsi fetchDataLocation untuk mendapatkan data lokasi berdasarkan latitude dan longitude
+    fetchDataLocation(url);
 }
 
 /**
@@ -32,7 +41,32 @@ function onMapClick(e) {
  */
 function onMarkerDragend(e) {
     const latlng = e.target.getLatLng()
-    console.log("koordinat marker onDrag",latlng);
+    //console.log("koordinat marker onDrag",latlng);
+
+    // Menetapkan nilai untuk elemen dengan id lat dan lng pada HTML (file create.blade.php)
+    document.getElementById("lat").value = latlng.lat;
+    document.getElementById("lng").value = latlng.lng;
+
+    // Menggunakan API  untuk proses reverse geocoding dengan latitude dan longitude
+    const url = "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + latlng.lat + "&lon=" + latlng.lng;
+    // Memanggil fungsi fetchDataLocation untuk mendapatkan data lokasi berdasarkan latitude dan longitude
+    fetchDataLocation(url);
+}
+
+async function fetchDataLocation(url) {
+    try {
+         // Menggunakan fetch API untuk mengambil data dari URL yang diberikan
+        const response = await fetch(url)
+
+        // Menunggu hasil dari response dan mengkonversinya menjadi JSON
+        const data = await response.json()
+
+        console.log("result fetcch data",data);
+        // Menetapkan nilai properti 'display_name' dari data ke elemen HTML dengan id 'description'
+        document.getElementById('description').value = data.display_name
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 map.on('click',onMapClick);

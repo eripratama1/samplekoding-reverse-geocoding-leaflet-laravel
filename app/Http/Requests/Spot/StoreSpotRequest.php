@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Spot;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Str;
 class StoreSpotRequest extends FormRequest
 {
     /**
@@ -11,7 +11,7 @@ class StoreSpotRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class StoreSpotRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required','min:4'],
+            'slug' => ['required'],
+            'image_path' => ['image','mimes:png,jpg,jpeg'],
+            'lat' => ['required'],
+            'lng' => ['required'],
+            'category_id' => ['required'],
+            'description' => ['required']
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'slug' => $this->slug ?: Str::slug($this->name),
+        ]);
     }
 }
