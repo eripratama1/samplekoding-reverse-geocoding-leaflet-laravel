@@ -7,12 +7,24 @@ use App\Models\Category;
 use App\Models\Spot;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class SpotController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function getSpots()
+    {
+        $model = Spot::query();
+        return DataTables::eloquent($model)
+        ->addColumn('action','spot.action')
+        ->addColumn('category_name',function(Spot $spot) {
+            return $spot->category->name;
+        })
+        ->toJson();
+    }
+
     public function index()
     {
         return view('spot.index');
