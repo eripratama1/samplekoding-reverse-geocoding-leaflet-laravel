@@ -95,8 +95,11 @@ class SpotController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Spot $spot)
     {
-        //
+        $name = $spot->name;
+        Cloudinary::destroy($spot->public_id);
+        $spot->delete();
+        return to_route('spot.index')->with('success',"Spot \"$name\" deleted");
     }
 }
