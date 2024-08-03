@@ -13,13 +13,14 @@
             <div class="col-md-6">
 
                 <div class="card">
-                    <div class="card-header">New data spot</div>
+                    <div class="card-header">Update data spot : {{ $spot->name }}</div>
                     <div class="card-body">
-                        <form action="{{route('spot.store')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('spot.update',$spot->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="form-group my-2">
                                 <label for="">Spot Name</label>
-                                <input type="text" name="name"
+                                <input type="text" name="name" id="name" value="{{$spot->name}}"
                                     class="form-control @error('name')
                                     is-invalid
                                 @enderror"
@@ -30,6 +31,7 @@
                             </div>
 
                             <div class="form-group my-2">
+                                <img src="{{$spot->image_path}}" class="img-fluid my-2" style="width: 300px; border-radius:5px" alt=""><br>
                                 <label for="">Upload Image</label>
                                 <input type="file" name="image_path"
                                     class="form-control @error('image_path')
@@ -43,7 +45,7 @@
 
                             <div class="form-group my-2">
                                 <label for="">Latitude</label>
-                                <input type="text" name="lat" id="lat"
+                                <input type="text" name="lat" id="lat" value="{{$spot->lat}}"
                                     class="form-control @error('lat')
                                     is-invalid
                                 @enderror"
@@ -55,7 +57,7 @@
 
                             <div class="form-group my-2">
                                 <label for="">Longitude</label>
-                                <input type="text" name="lng" id="lng"
+                                <input type="text" name="lng" id="lng" value="{{$spot->lng}}"
                                     class="form-control @error('lng')
                                     is-invalid
                                 @enderror"
@@ -73,7 +75,9 @@
                                 @enderror">
                                     <option value="">Pilih Kategori</option>
                                     @foreach ($category as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}" @if ($item->id === $spot->category_id)
+                                            selected
+                                        @endif>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('category_id')
@@ -83,9 +87,11 @@
 
                             <div class="form-group my-2">
                                 <label for="">Deskripsi</label>
-                                <textarea name="description" id="description" class="form-control @error("description")
+                                <textarea name="description" id="description"
+                                    class="form-control @error('description')
                                     is-invalid
-                                @enderror" id="" cols="30" rows="10"></textarea>
+                                @enderror"
+                                    id="" cols="30" rows="10">{{$spot->description}}</textarea>
                                 @error('description')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
@@ -109,7 +115,7 @@
     <script src="{{ asset('assets/js/geocoder.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded',function () {
-            createSpot()
+            updateSpot()
         })
     </script>
 @endpush

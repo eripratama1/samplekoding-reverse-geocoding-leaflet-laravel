@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Spot\StoreSpotRequest;
+use App\Http\Requests\Spot\UpdateSpotRequest;
 use App\Models\Category;
 use App\Models\Spot;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
@@ -79,17 +80,35 @@ class SpotController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Spot $spot)
     {
-        //
+        return view('spot.edit',[
+            'spot' => $spot,
+            'category' => Category::get()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSpotRequest $request, Spot $spot)
     {
-        //
+        $data = $request->validated();
+
+        if ($uploadImage = $request->file('image_path')) {
+            if ($spot->public_id) {
+                Cloudinary::destroy($spot->public_id);
+            }
+
+            $uploadResult = Cloudinary::upload($uploadImage->getRealPath(),[
+                'folder' => 'samplekoding/laravel-reverse-geocoding/img-spot'
+            ]);
+            $data['image_path'] = $uploadResult->getSecurePath();
+            $data['public_id'] = $uploadResult->getPublicId();
+        }
+
+        $spot->update($data);
+        return to_route('spot.index')->with('success','Spot updated');
     }
 
     /**
@@ -98,7 +117,9 @@ class SpotController extends Controller
     public function destroy(Spot $spot)
     {
         $name = $spot->name;
-        Cloudinary::destroy($spot->public_id);
+        if ($spot->public_id) {
+            Cloudinary::destroy($spot->public_id);
+        }
         $spot->delete();
         return to_route('spot.index')->with('success',"Spot \"$name\" deleted");
     }
