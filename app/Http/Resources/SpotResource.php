@@ -24,6 +24,7 @@ class SpotResource extends JsonResource
             'category' => [
                 'name' => $this->category->name,
                 'slug' => $this->category->slug,
+                'icon' => $this->category->getIconMarker()
             ]
         ];
     }

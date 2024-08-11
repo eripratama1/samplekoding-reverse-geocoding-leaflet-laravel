@@ -10,4 +10,13 @@ class Category extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function getIconMarker()
+    {
+        if ($this->icon) {
+            return $this->icon;
+        }
+
+        return;
+    }
 }

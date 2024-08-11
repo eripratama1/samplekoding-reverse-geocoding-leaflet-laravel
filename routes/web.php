@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+/** Ganti view untuk halaman index dengan file home.blade */
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
