@@ -9,19 +9,28 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                {{-- <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                <!-- Modal Map -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title
+                                </h1>
+                                <span class="badge text-bg-primary mx-2" id="modal-category">Category name</span>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="modal-map" style="height: 400px; border-radius:10px;"></div>
+                                <div id="modal-description"></div>
+                            </div>
                         </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+                    </div>
                 </div>
-            </div> --}}
+                <!-- Modal Map -->
+
                 <div id="map" style="height: 500px; border-radius:8px;"></div>
             </div>
         </div>
