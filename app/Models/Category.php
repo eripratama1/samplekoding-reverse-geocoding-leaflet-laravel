@@ -19,4 +19,13 @@ class Category extends Model
 
         return;
     }
+
+    /**
+     * Membuat relasi hasMany (one-to-many)
+     * dengan tabel spots
+     */
+    public function spots()
+    {
+        return $this->hasMany(Spot::class);
+    }
 }
