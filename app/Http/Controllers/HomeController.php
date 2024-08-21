@@ -46,6 +46,6 @@ class HomeController extends Controller
     public function categorySpot($slug)
     {
         $categorySpot = Category::where('slug', $slug)->with('spots')->first();
-        return dd($categorySpot);
+        return view('categoryspot',['categorySpot' => $categorySpot]);
     }
 }
