@@ -12,10 +12,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /**
- * Route baru untuk kategori
+ * Route baru untuk kategori dan detailSpot
  */
 Route::get('/categories', [App\Http\Controllers\HomeController::class, 'categories'])->name('categories');
 Route::get('/category/{slug}', [App\Http\Controllers\HomeController::class, 'categorySpot'])->name('categorySpot');
+Route::get('/detail-spot/{slug}', [App\Http\Controllers\HomeController::class, 'detailSpot'])->name('detailSpot');
 
 Route::resource('category',(App\Http\Controllers\CategoryController::class));
 Route::resource('spot',(App\Http\Controllers\SpotController::class));

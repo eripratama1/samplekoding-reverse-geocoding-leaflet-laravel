@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Spot;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -18,7 +19,7 @@ class HomeController extends Controller
          * Menambahkan method except untuk beberapa method
          * agar bisa diakses tanpa harus melakukan login / autentikasi
          */
-        $this->middleware('auth')->except('categories', 'categorySpot');
+        $this->middleware('auth')->except('categories', 'categorySpot','detailSpot');
     }
 
     /**
@@ -48,4 +49,16 @@ class HomeController extends Controller
         $categorySpot = Category::where('slug', $slug)->with('spots')->first();
         return view('categoryspot',['categorySpot' => $categorySpot]);
     }
+
+    /**
+     * Method untuk menampilkan detail data spot
+     */
+    public function detailSpot($slug)
+    {
+        $spot = Spot::where('slug',$slug)->first();
+        return view('detail-spot',[
+            'spot' => $spot
+        ]);
+    }
+
 }

@@ -44,7 +44,7 @@
     <script src="{{ asset('assets/js/dataSpot.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            //createSpot()
+            fetchSpots()
         })
     </script>
 @endpush

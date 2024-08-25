@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <h2 class="text-center">Kategori {{$categorySpot->name}}</h2>
+                <h2 class="text-center">Kategori {{ $categorySpot->name }}</h2>
                 <hr class="my-3">
 
                 <div class="row">
@@ -13,20 +13,21 @@
                             <div class="card shadow my-2">
                                 <div class="card-body">
                                     <div class="float-end">
-                                        <img src="{{$item->getImagePath()}}" width="250" alt="">
+                                        <img src="{{ $item->getImagePath() }}" width="250" alt="">
                                     </div>
                                     <h4>
-                                        <strong>{{$item->name}}</strong>
-                                        <span class="badge rounded-pill text-bg-success">{{$categorySpot->name}}</span>
+                                        <strong>{{ $item->name }}</strong>
+                                        <span class="badge rounded-pill text-bg-success">{{ $categorySpot->name }}</span>
                                     </h4>
                                 </div>
                                 <div class="card-footer">
-                                    <a href="" class="btn btn-primary btn-sm">Detail Spot</a>
+                                    <a href="{{ route('detailSpot', $item->slug) }}" class="btn btn-primary btn-sm">Detail
+                                        Spot</a>
                                 </div>
                             </div>
                         </div>
                     @empty
-                    <h2 class="text-center">Data Empty</h2>
+                        <h2 class="text-center">Data Empty</h2>
                     @endforelse
                 </div>
             </div>
