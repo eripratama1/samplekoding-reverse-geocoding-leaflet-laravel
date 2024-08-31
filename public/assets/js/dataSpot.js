@@ -5,6 +5,19 @@ function fetchSpots() {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
+    var markersLayer = new L.LayerGroup();
+    map.addLayer(markersLayer)
+
+    var controlSearch = new L.Control.Search({
+		position:'topleft',
+		layer: markersLayer,
+		initial: false,
+		zoom: 18,
+
+	});
+
+    map.addControl( controlSearch );
+
     /**
      * Akses endpoint untuk menampilkan semua data spot pada map
      */
@@ -59,6 +72,7 @@ function fetchSpots() {
                         </a>
                 </div>`)
                     .addTo(map)
+                markersLayer.addLayer(marker);
             })
         })
         .catch(function (error) {
